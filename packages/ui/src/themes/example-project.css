@@ -1,0 +1,13 @@
+[data-theme="example-project"] {
+  --primary: oklch(0.546 0.245 262.881);
+  --primary-foreground: oklch(0.985 0 0);
+  --accent: oklch(0.882 0.059 254.128);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+}
+
+[data-theme="example-project"].dark {
+  --primary: oklch(0.623 0.214 259.815);
+  --primary-foreground: oklch(0.985 0 0);
+  --accent: oklch(0.274 0.04 260.031);
+  --accent-foreground: oklch(0.985 0 0);
+}
