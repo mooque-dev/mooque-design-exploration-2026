@@ -10,6 +10,15 @@ import {
 } from "@workspace/ui/components/card";
 import { Badge } from "@workspace/ui/components/badge";
 import { getFeaturedProjects } from "@/lib/projects";
+import { cn } from "@workspace/ui/lib/utils";
+
+function statusClass(status: string) {
+  if (status === "in-progress")
+    return "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400";
+  if (status === "shipped")
+    return "border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400";
+  return "";
+}
 
 export default function HomePage() {
   const featured = getFeaturedProjects();
@@ -19,17 +28,17 @@ export default function HomePage() {
       {/* Hero */}
       <section className="container mx-auto px-4 py-24 md:px-6 md:py-32 lg:py-40">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="animate-fade-up text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
             Design ideas,
             <br />
             <span className="text-muted-foreground">brought to life.</span>
           </h1>
-          <p className="mt-6 text-lg text-muted-foreground md:text-xl">
+          <p className="animate-fade-up mt-6 text-lg text-muted-foreground [animation-delay:100ms] md:text-xl">
             A collection of design explorations — from concept to code.
             Researching, prototyping, and building across mobile, web, and
             tablet.
           </p>
-          <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="animate-fade-up mt-8 flex items-center justify-center gap-4 [animation-delay:200ms]">
             <Button asChild size="lg">
               <Link href="/projects">
                 View Projects
@@ -64,17 +73,27 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            {featured.map((project) => (
-              <Link key={project.slug} href={`/projects/${project.slug}`}>
-                <Card className="h-full transition-shadow hover:shadow-md">
+            {featured.map((project, i) => (
+              <Link
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                className="group animate-fade-up"
+                style={{ animationDelay: `${300 + i * 100}ms` }}
+              >
+                <Card className="h-full group-hover:-translate-y-1 group-hover:shadow-md">
                   <CardHeader>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       {project.platform.map((p) => (
                         <Badge key={p} variant="secondary">
                           {p}
                         </Badge>
                       ))}
-                      <Badge variant="outline">{project.status}</Badge>
+                      <Badge
+                        variant="outline"
+                        className={cn(statusClass(project.status))}
+                      >
+                        {project.status}
+                      </Badge>
                     </div>
                     <CardTitle className="text-xl">{project.title}</CardTitle>
                     <CardDescription>{project.description}</CardDescription>
