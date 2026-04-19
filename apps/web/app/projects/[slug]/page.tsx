@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
 import { Badge } from "@workspace/ui/components/badge";
 import { projects, getProject } from "@/lib/projects";
+import { IgProfileExplorer } from "@/components/ig-post-filter/ig-profile-explorer";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -24,6 +25,10 @@ export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
+const SHOWCASE_COMPONENTS: Record<string, React.ComponentType> = {
+  "ig-post-filter": IgProfileExplorer,
+};
+
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
   const project = getProject(slug);
@@ -32,9 +37,11 @@ export default async function ProjectPage({ params }: Props) {
     notFound();
   }
 
+  const ShowcaseComponent = SHOWCASE_COMPONENTS[slug];
+
   return (
-    <div className="container mx-auto px-4 py-16 md:px-6 md:py-24">
-      <Button asChild variant="ghost" className="mb-8">
+    <div className="container mx-auto px-4 py-8 md:px-6 md:py-16">
+      <Button asChild variant="ghost" className="mb-6">
         <Link href="/projects">
           <ArrowLeft className="size-4" />
           Back to projects
@@ -65,11 +72,16 @@ export default async function ProjectPage({ params }: Props) {
             </span>
           ))}
         </div>
+      </div>
 
-        <hr className="my-10" />
+      <hr className="my-8" />
 
-        {/* Showcase area — this is where the actual design exploration content goes */}
-        <div className="rounded-xl border border-dashed p-12 text-center">
+      {ShowcaseComponent ? (
+        <div className="mx-auto max-w-lg overflow-hidden rounded-2xl border shadow-sm">
+          <ShowcaseComponent />
+        </div>
+      ) : (
+        <div className="mx-auto max-w-3xl rounded-xl border border-dashed p-12 text-center">
           <p className="text-muted-foreground">
             This is where the design exploration for{" "}
             <span className="font-medium text-foreground">
@@ -79,7 +91,7 @@ export default async function ProjectPage({ params }: Props) {
             documentation here.
           </p>
         </div>
-      </div>
+      )}
     </div>
   );
 }

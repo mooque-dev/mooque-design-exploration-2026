@@ -2,6 +2,17 @@ import type { Project } from "@workspace/utils";
 
 export const projects: Project[] = [
   {
+    slug: "ig-post-filter",
+    title: "Instagram Post Filter",
+    description:
+      "Reimagining profile post discovery — keyword clouds, fuzzy search, and multi-sort for profiles with thousands of posts.",
+    tags: ["mobile", "social", "filtering", "search", "ux"],
+    platform: ["mobile", "web"],
+    status: "in-progress",
+    featured: true,
+    createdAt: "2026-02-18",
+  },
+  {
     slug: "habit-tracker",
     title: "Habit Tracker",
     description:
