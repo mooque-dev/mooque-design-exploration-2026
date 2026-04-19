@@ -1,5 +1,4 @@
 {
   "buildCommand": "cd ../.. && pnpm turbo run build --filter=@workspace/web",
-  "outputDirectory": ".next",
   "installCommand": "cd ../.. && pnpm install"
 }
